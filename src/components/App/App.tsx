@@ -1,20 +1,28 @@
 import * as React from 'react';
 import styled from 'styled-components'
-import Spinner from '../Spinner';
-import withBookstoreService from '../Hoc'
+import { Route, Switch } from 'react-router-dom'
+import { HomePage, CartPage } from '../pages'
 
 const TestSpan = styled.span`
   color: blue;
   font-weight: bold;
 `
 
-const App = ({ bookstoreService }: any) => {
-  console.log(bookstoreService.getBooks());
-
+const App = () => {
   return (
-    <TestSpan>Hello World</TestSpan>
+    <Switch>
+      <Route
+        path="/"
+        component={HomePage}
+        exact
+      />
+      <Route
+        path="/cart"
+        component={CartPage}
+      />
+    </Switch>
 
   );
 }
 
-export default withBookstoreService()(App);
+export default App;
