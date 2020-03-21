@@ -1,11 +1,20 @@
 import * as React from 'react';
+import styled from 'styled-components'
+import Spinner from '../Spinner';
+import withBookstoreService from '../Hoc'
 
-function App() {
+const TestSpan = styled.span`
+  color: blue;
+  font-weight: bold;
+`
+
+const App = ({ bookstoreService }: any) => {
+  console.log(bookstoreService.getBooks());
+
   return (
-    <React.Fragment>
-      <span>Hello World</span>
-    </React.Fragment>
+    <TestSpan>Hello World</TestSpan>
+
   );
 }
 
-export default App;
+export default withBookstoreService()(App);
