@@ -1,14 +1,18 @@
-const initialState = {
-  books: [
-    { id: 1, title: 'Republic of Thiefs', author: 'Scott Linch' },
-    { id: 2, title: 'Mazes of Eho', author: 'Maks Frai' },
-    { id: 3, title: 'Simple magic things', author: 'Maks Frai' },
-  ],
+const initialState: InitialState = {
+  books: [],
 }
 
+interface InitialState {
+  books: Array<Book>;
+}
 interface Action {
   type: string;
-  payload: any;
+  payload: Array<Book>;
+}
+interface Book {
+  id: number;
+  author: string;
+  title: string;
 }
 
 const reducer = (state = initialState, action: Action) => {

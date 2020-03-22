@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import ErrorIndicator from '../ErrorIndicator';
 
 
-class ErrorBoundry extends React.Component {
+class ErrorBoundry extends Component {
 
   state = {
     hasError: false
