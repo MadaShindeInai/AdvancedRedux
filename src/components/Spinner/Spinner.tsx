@@ -1,11 +1,7 @@
 import * as React from 'react';
-import styled from 'styled-components'
+import { SpinnerSpan } from './styled'
 
-const SpinnerSpan = styled.span`
-  color: green;
-`
-
-const Spinner = () => {
+const Spinner: React.FC = () => {
   return (
     <React.Fragment>
       <SpinnerSpan>SPINNER</SpinnerSpan>

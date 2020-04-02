@@ -1,13 +1,9 @@
-interface Book {
-  id: number;
-  author: string;
-  title: string;
-}
+import { Book } from '../interfaces'
 
 const booksLoaded = (newBooks: Array<Book>) => {
   return {
     type: 'BOOKS_LOADED',
-    payload: newBooks
+    payload: newBooks,
   }
 }
 export { booksLoaded };

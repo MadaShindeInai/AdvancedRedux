@@ -1,11 +1,7 @@
 import * as React from 'react';
-import styled from 'styled-components'
+import { ErrorSpan } from './styled'
 
-const ErrorSpan = styled.span`
-  color: red;
-`
-
-const ErrorIndicator = () => {
+const ErrorIndicator: React.FC = () => {
   return (
     <React.Fragment>
       <ErrorSpan>ERRROR</ErrorSpan>

@@ -1,8 +1,4 @@
-interface Book {
-  id: number;
-  author: string;
-  title: string;
-}
+import { Book } from '../interfaces'
 
 class BookstoreService {
   public getBooks(): Array<Book> {
