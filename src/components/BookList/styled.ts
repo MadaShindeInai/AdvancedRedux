@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
-export const TestLi = styled.li`
-  color: purple;
-  font-weight: bold;
+export const BookListLi = styled.li`
+`
+export const BookListUl = styled.ul`
+  list-style:none;
+  display: flex;
+  justify-content: space-evenly;
 `

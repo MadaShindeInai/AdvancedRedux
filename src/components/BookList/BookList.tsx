@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import compose from '../../utils';
 import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
 import * as actions from '../../actions';
-import { TestLi } from './styled';
+import { BookListLi, BookListUl } from './styled';
 import { Books, Book } from '../../interfaces';
 
 const BookList = ({ books, booksLoaded, bookstoreService }: Books) => {
@@ -13,15 +13,17 @@ const BookList = ({ books, booksLoaded, bookstoreService }: Books) => {
     booksLoaded(data);
   }, [])
   return (
-    <ul>
+    <BookListUl>
       {
         books.map((book: Book) => {
           return (
-            <TestLi key={book.id}><BookListItem book={book} /></TestLi>
+            <BookListLi key={book.id}>
+              <BookListItem book={book} />
+            </BookListLi>
           )
         })
       }
-    </ul>
+    </BookListUl>
 
   )
 }

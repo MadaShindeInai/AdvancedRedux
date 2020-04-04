@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { TestSpan } from './styled';
+import { TestSpan, ItemContainer, AddToCartButton } from './styled';
 
-const BookListItem = ({ book: { title, author } }: any) => {
+const BookListItem = ({ book: { title, author, price, coverImage } }: any) => {
   return (
-    <React.Fragment>
+    <ItemContainer>
+      <img src={coverImage} alt="cover" width="140" height="200" />
       <TestSpan>{title}</TestSpan>
       <TestSpan>{author}</TestSpan>
-    </React.Fragment>
+      <TestSpan>{price} BYN</TestSpan>
+      <AddToCartButton className="btn btn-info add-to-cart">Add to cart</AddToCartButton>
+    </ItemContainer>
 
   );
 }
