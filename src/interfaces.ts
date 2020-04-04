@@ -4,6 +4,14 @@ export interface Book {
   title: string;
 }
 
+export interface Books {
+  books: Array<Book>;
+  bookstoreService: {
+    getBooks: () => Book;
+  };
+  booksLoaded: any;
+}
+
 export interface AppContextInterface {
   getBooks: any;
 }

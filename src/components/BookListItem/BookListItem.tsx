@@ -1,14 +1,7 @@
 import * as React from 'react';
-import styled from 'styled-components'
+import { TestSpan } from './styled';
 
-
-const TestSpan = styled.span`
-  color: blue;
-  font-weight: bold;
-`
-
-const BookListItem = ({ book }: any) => {
-  const { title, author } = book;
+const BookListItem = ({ book: { title, author } }: any) => {
   return (
     <React.Fragment>
       <TestSpan>{title}</TestSpan>
@@ -18,5 +11,5 @@ const BookListItem = ({ book }: any) => {
   );
 }
 
-
+//TYPESCRYPT1111
 export default BookListItem;

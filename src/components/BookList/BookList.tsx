@@ -1,27 +1,11 @@
 import * as React from 'react';
-import styled from 'styled-components'
-import BookListItem from '../BookListItem'
+import BookListItem from '../BookListItem';
 import { connect } from 'react-redux';
-import compose from '../../utils'
+import compose from '../../utils';
 import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
-import * as actions from '../../actions'
-const TestLi = styled.li`
-  color: purple;
-  font-weight: bold;
-`
-interface Books {
-  books: Array<Book>;
-  bookstoreService: {
-    getBooks: () => Book;
-  };
-  booksLoaded: any;
-}
-
-interface Book {
-  id: number;
-  author: string;
-  title: string;
-}
+import * as actions from '../../actions';
+import { TestLi } from './styled';
+import { Books, Book } from '../../interfaces';
 
 const BookList = ({ books, booksLoaded, bookstoreService }: Books) => {
   React.useEffect(() => {
