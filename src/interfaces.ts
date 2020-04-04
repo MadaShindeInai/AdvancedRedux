@@ -4,11 +4,11 @@ export interface Book {
   title: string;
   price: number;
   coverImage: string;
+  then?: any;
 }
 export interface IHeaderProps {
   numItems: number;
   total: number;
-  // children?: any;
 }
 
 export interface Books {
@@ -17,6 +17,7 @@ export interface Books {
     getBooks: () => Book;
   };
   booksLoaded: any;
+  loading: boolean;
 }
 
 export interface AppContextInterface {
@@ -25,6 +26,7 @@ export interface AppContextInterface {
 
 export interface InitialState {
   books: Array<Book>;
+  loading: boolean;
 }
 
 export interface Action {

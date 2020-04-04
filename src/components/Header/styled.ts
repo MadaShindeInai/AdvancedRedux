@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { IHeaderA } from '../../interfaces';
+import { Link } from 'react-router-dom';
 
 export const StyledHeader = styled.header`
   display: flex;
@@ -7,7 +8,7 @@ export const StyledHeader = styled.header`
   margin-bottom: 150px;
   padding: 20px 120px;
 `
-export const StyledHeaderA = styled.a`
+export const StyledHeaderLink = styled(Link)`
   text-decoration: none;  
   font-size: 25px;
   font-weight: bold;
