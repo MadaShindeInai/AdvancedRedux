@@ -1,15 +1,16 @@
 import * as React from 'react';
 import BookListItem from '../BookListItem';
 import { connect } from 'react-redux';
+import * as actions from '../../actions';
 import compose from '../../utils';
 import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
-import * as actions from '../../actions';
 import { SpinnerWrapper, BookListUl } from './styled';
 import { Books, Book } from '../../interfaces';
 // import Spinner from '../Spinner';
 
 import { css } from "@emotion/core";
 import PacmanLoader from "react-spinners/PacmanLoader";
+import ErrorIndicator from '../ErrorIndicator';
 
 const override = css`
   display: block;
@@ -17,16 +18,17 @@ const override = css`
   width: 300px;
 `;
 
-const BookList = ({ books, loading, booksLoaded, bookstoreService }: Books) => {
+const BookList = ({ books, loading, error, booksLoaded, booksError, booksRequested, bookstoreService }: Books) => {
   React.useEffect(() => {
+    booksRequested();
     bookstoreService.getBooks()
-      .then((data: Books): void => {
-        booksLoaded(data)
-      });
-  });
-  // if (loading) {
-  //   return <Spinner />
-  // }
+      .then((data: Books) => booksLoaded(data))
+      .catch((err: any) => booksError(err))
+  }, []);
+
+  if (error) {
+    return <ErrorIndicator />
+  }
   return (
     <>
       <SpinnerWrapper className="sweet-loading">
@@ -52,16 +54,9 @@ const BookList = ({ books, loading, booksLoaded, bookstoreService }: Books) => {
 
   )
 }
-const mapStateToProps = ({ books, loading }: Books) => {
-  return { books, loading };
+const mapStateToProps = ({ books, loading, error }: Books) => {
+  return { books, loading, error };
 }
-
-// const mapDispatchToProps = (dispatch: any) => {
-
-//   return bindActionCreators({
-//     booksLoaded
-//   }, dispatch);
-// }
 
 export default compose(
   withBookstoreservice(),

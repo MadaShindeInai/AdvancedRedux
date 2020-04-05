@@ -1,4 +1,4 @@
-import { Book } from '../interfaces'
+// import { Book } from '../interfaces'
 
 class BookstoreService {
   data = [
@@ -24,11 +24,15 @@ class BookstoreService {
       coverImage: 'http://loveread.ec/img/photo_books/16540.jpg'
     },
   ];
-  public getBooks(): Promise<Array<Book>> {
-    return new Promise((res) => {
+  public getBooks() {
+    return new Promise((res, reject) => {
       setTimeout(() => {
-        res(this.data);
-      }, 3000);
+        if (Math.random() > 0.1) {
+          reject(new Error('Something bad happend'));
+        } else {
+          res(this.data);
+        }
+      }, 1000);
     })
   }
 }

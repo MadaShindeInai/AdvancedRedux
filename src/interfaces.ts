@@ -5,6 +5,7 @@ export interface Book {
   price: number;
   coverImage: string;
   then?: any;
+  Error: any;
 }
 export interface IHeaderProps {
   numItems: number;
@@ -18,6 +19,9 @@ export interface Books {
   };
   booksLoaded: any;
   loading: boolean;
+  booksRequested: any;
+  booksError: any;
+  error: any;
 }
 
 export interface AppContextInterface {
@@ -27,6 +31,7 @@ export interface AppContextInterface {
 export interface InitialState {
   books: Array<Book>;
   loading: boolean;
+  error: any;
 }
 
 export interface Action {
