@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as actions from '../../actions';
+import { booksLoaded, booksRequested, booksError } from '../../actions';
 import { connect } from 'react-redux';
 import compose from '../../utils';
 import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
@@ -27,7 +27,18 @@ const mapStateToProps = ({ books, loading, error }: Books) => {
   return { books, loading, error };
 }
 
+const mapDispatchToProps = (dispatch: React.Dispatch<any>, ownProps: Books) => {
+  return {
+    fetchBooks: () => {
+      dispatch(booksRequested());
+      ownProps.bookstoreService.getBooks()
+        .then((data: Books[]) => dispatch(booksLoaded(data)))
+        .catch((err: any) => dispatch(booksError(err)))
+    }
+  }
+}
+
 export default compose(
   withBookstoreservice(),
-  connect(mapStateToProps, actions),
+  connect(mapStateToProps, mapDispatchToProps),
 )(ErrorIndicator);

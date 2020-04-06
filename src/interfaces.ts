@@ -1,3 +1,6 @@
+export const BOOKS_LOADED = 'BOOKS_LOADED'
+export const BOOKS_REQUESTED = 'BOOKS_REQUESTED'
+export const BOOKS_ERROR = 'BOOKS_ERROR'
 export interface Book {
   id: number;
   author: string;
@@ -11,8 +14,7 @@ export interface IHeaderProps {
   numItems: number;
   total: number;
 }
-
-export interface Books {
+export interface Books extends Book {
   books: Array<Book>;
   bookstoreService: {
     getBooks: () => Book;
@@ -22,12 +24,12 @@ export interface Books {
   booksRequested: any;
   booksError: any;
   error: any;
+  fetchBooks: any;
 }
 
 export interface AppContextInterface {
   getBooks: any;
 }
-
 export interface InitialState {
   books: Array<Book>;
   loading: boolean;
@@ -40,4 +42,15 @@ export interface Action {
 }
 export interface IHeaderA {
   border?: string;
+}
+export interface IBooksLoaded {
+  type: typeof BOOKS_LOADED
+  payload: Array<Book>
+}
+export interface IBooksRequested {
+  type: typeof BOOKS_REQUESTED
+}
+export interface IBooksError {
+  type: typeof BOOKS_ERROR
+  payload: null | string
 }

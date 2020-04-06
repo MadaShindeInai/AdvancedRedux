@@ -1,12 +1,11 @@
 import * as React from 'react';
 import BookListItem from '../BookListItem';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { booksLoaded, booksRequested, booksError } from '../../actions';
 import compose from '../../utils';
 import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
 import { SpinnerWrapper, BookListUl } from './styled';
 import { Books, Book } from '../../interfaces';
-// import Spinner from '../Spinner';
 
 import { css } from "@emotion/core";
 import PacmanLoader from "react-spinners/PacmanLoader";
@@ -18,12 +17,9 @@ const override = css`
   width: 300px;
 `;
 
-const BookList = ({ books, loading, error, booksLoaded, booksError, booksRequested, bookstoreService }: Books) => {
+const BookList = ({ books, loading, error, fetchBooks }: Books) => {
   React.useEffect(() => {
-    booksRequested();
-    bookstoreService.getBooks()
-      .then((data: Books) => booksLoaded(data))
-      .catch((err: any) => booksError(err))
+    fetchBooks();
   }, []);
 
   if (error) {
@@ -58,7 +54,20 @@ const mapStateToProps = ({ books, loading, error }: Books) => {
   return { books, loading, error };
 }
 
+const mapDispatchToProps = (dispatch: React.Dispatch<any>, ownProps: Books) => {
+  const { bookstoreService } = ownProps;
+  return {
+    fetchBooks: () => {
+      dispatch(booksRequested());
+      bookstoreService.getBooks()
+        .then((data: Books[]) => dispatch(booksLoaded(data)))
+        .catch((err: string) => dispatch(booksError(err)))
+
+    }
+  }
+}
+
 export default compose(
   withBookstoreservice(),
-  connect(mapStateToProps, actions),
+  connect(mapStateToProps, mapDispatchToProps),
 )(BookList);

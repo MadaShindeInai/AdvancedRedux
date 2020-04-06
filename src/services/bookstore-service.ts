@@ -27,7 +27,7 @@ class BookstoreService {
   public getBooks() {
     return new Promise((res, reject) => {
       setTimeout(() => {
-        if (Math.random() > 0.1) {
+        if (Math.random() > 0.8) {
           reject(new Error('Something bad happend'));
         } else {
           res(this.data);
