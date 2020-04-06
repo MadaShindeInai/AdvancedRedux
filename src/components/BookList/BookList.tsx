@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BookListItem from '../BookListItem';
 import { connect } from 'react-redux';
-import { fetchBooks } from '../../actions';
+import { fetchBooks, bookAddedToCart } from '../../actions';
 import compose from '../../utils';
 import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
 import { SpinnerWrapper, BookListUl } from './styled';
@@ -17,7 +17,7 @@ const override = css`
   width: 300px;
 `;
 
-const BookList = ({ books, loading }: IBookList) => {
+const BookList = ({ books, loading, onAddedToCart }: IBookList) => {
   return (
     <React.Fragment>
       <SpinnerWrapper className="sweet-loading">
@@ -33,7 +33,10 @@ const BookList = ({ books, loading }: IBookList) => {
           books.map((book: Book) => {
             return (
               <li key={book.id}>
-                <BookListItem book={book} />
+                <BookListItem
+                  book={book}
+                  onAddedToCart={() => onAddedToCart(book.id)}
+                />
               </li>
             )
           })
@@ -43,7 +46,7 @@ const BookList = ({ books, loading }: IBookList) => {
   );
 }
 
-const BookListContainer = ({ books, loading, error, fetchBooks }: Books) => {
+const BookListContainer = ({ books, loading, error, onAddedToCart, fetchBooks }: Books) => {
   React.useEffect(() => {
     fetchBooks();
   }, []);
@@ -53,7 +56,7 @@ const BookListContainer = ({ books, loading, error, fetchBooks }: Books) => {
   }
   return (
     <>
-      <BookList books={books} loading={loading} />
+      <BookList onAddedToCart={onAddedToCart} books={books} loading={loading} />
     </>
   )
 }
@@ -64,7 +67,9 @@ const mapStateToProps = ({ books, loading, error }: Books) => {
 
 const mapDispatchToProps = (dispatch: React.Dispatch<any>, { bookstoreService }: IOwnProps) => {
   return {
-    fetchBooks: fetchBooks(bookstoreService, dispatch)
+    fetchBooks: fetchBooks(bookstoreService, dispatch),
+    onAddedToCart: (id: any) => dispatch(bookAddedToCart(id)),
+
   }
 }
 

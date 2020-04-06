@@ -1,12 +1,14 @@
 import {
   Book,
+  Books,
   IBooksLoaded,
   IBooksRequested,
   IBooksError,
+  IBookAdded,
   BOOKS_LOADED,
   BOOKS_REQUESTED,
   BOOKS_ERROR,
-  Books
+  BOOK_ADDED_TO_CART,
 } from '../interfaces'
 
 const booksLoaded = (newBooks: Array<Book>): IBooksLoaded => {
@@ -26,6 +28,12 @@ const booksError = (error: null | string): IBooksError => {
     payload: error,
   }
 }
+const bookAddedToCart = (bookId: number): IBookAdded => {
+  return {
+    type: BOOK_ADDED_TO_CART,
+    payload: bookId,
+  }
+}
 
 const fetchBooks = (bookstoreService: Books, dispatch: React.Dispatch<any>) => () => {
   dispatch(booksRequested());
@@ -34,4 +42,4 @@ const fetchBooks = (bookstoreService: Books, dispatch: React.Dispatch<any>) => (
     .catch((err: string) => dispatch(booksError(err)))
 }
 
-export { fetchBooks };
+export { fetchBooks, bookAddedToCart };
