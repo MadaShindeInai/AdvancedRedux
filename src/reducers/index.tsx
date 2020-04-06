@@ -5,8 +5,10 @@ import {
   BOOKS_REQUESTED,
   BOOKS_ERROR,
   BOOK_ADDED_TO_CART,
+  BOOK_REMOVED_FROM_CART,
+  ALL_BOOKS_REMOVED_FROM_CART
 } from '../interfaces'
-import { updateCartItems, updateCartItem } from './reducesrFuncs';
+import { updateOrder } from './reducesrFuncs';
 
 const initialState: InitialState = {
   books: [],
@@ -40,16 +42,15 @@ const reducer = (state = initialState, action: Action): InitialState => {
         error: action.payload,
       };
     case BOOK_ADDED_TO_CART:
-      const bookId = action.payload;
-      const book = state.books.find((book) => book.id === bookId);
-      const itemIndex = state.cartItems.findIndex(({ id }) => id === bookId);
-      const item = state.cartItems[itemIndex];
-      const newItem = updateCartItem(book, item);
-
-      return {
-        ...state,
-        cartItems: updateCartItems(state.cartItems, newItem, itemIndex)
-      };
+      return updateOrder(state, action.payload, 1);
+      ;
+    case BOOK_REMOVED_FROM_CART:
+      return updateOrder(state, action.payload, -1);
+      ;
+    case ALL_BOOKS_REMOVED_FROM_CART:
+      const item = state.cartItems.find(({ id }) => id === action.payload);
+      return updateOrder(state, action.payload, -item!.count!);
+      ;
     default:
       return state;
   }
