@@ -1,6 +1,6 @@
-export const BOOKS_LOADED = 'BOOKS_LOADED'
-export const BOOKS_REQUESTED = 'BOOKS_REQUESTED'
-export const BOOKS_ERROR = 'BOOKS_ERROR'
+export const BOOKS_LOADED: string = 'FETCH_BOOKS_SUCSESS';
+export const BOOKS_REQUESTED: string = 'FETCH_BOOKS_REQUEST';
+export const BOOKS_ERROR: string = 'FETCH_BOOKS_FAILURE';
 export interface Book {
   id: number;
   author: string;
@@ -19,12 +19,20 @@ export interface Books extends Book {
   bookstoreService: {
     getBooks: () => Book;
   };
+  getBooks: () => Book;
   booksLoaded: any;
   loading: boolean;
   booksRequested: any;
   booksError: any;
   error: any;
   fetchBooks: any;
+}
+export interface IBookList {
+  books: Array<Book>;
+  loading: boolean;
+}
+export interface IOwnProps {
+  bookstoreService: any;
 }
 
 export interface AppContextInterface {

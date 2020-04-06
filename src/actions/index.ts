@@ -5,7 +5,8 @@ import {
   IBooksError,
   BOOKS_LOADED,
   BOOKS_REQUESTED,
-  BOOKS_ERROR
+  BOOKS_ERROR,
+  Books
 } from '../interfaces'
 
 const booksLoaded = (newBooks: Array<Book>): IBooksLoaded => {
@@ -25,4 +26,12 @@ const booksError = (error: null | string): IBooksError => {
     payload: error,
   }
 }
-export { booksLoaded, booksRequested, booksError };
+
+const fetchBooks = (bookstoreService: Books, dispatch: React.Dispatch<any>) => () => {
+  dispatch(booksRequested());
+  bookstoreService.getBooks()
+    .then((data: Books[]) => dispatch(booksLoaded(data)))
+    .catch((err: string) => dispatch(booksError(err)))
+}
+
+export { fetchBooks };

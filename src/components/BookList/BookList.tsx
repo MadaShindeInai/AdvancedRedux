@@ -1,11 +1,11 @@
 import * as React from 'react';
 import BookListItem from '../BookListItem';
 import { connect } from 'react-redux';
-import { booksLoaded, booksRequested, booksError } from '../../actions';
+import { fetchBooks } from '../../actions';
 import compose from '../../utils';
 import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
 import { SpinnerWrapper, BookListUl } from './styled';
-import { Books, Book } from '../../interfaces';
+import { Books, Book, IBookList, IOwnProps } from '../../interfaces';
 
 import { css } from "@emotion/core";
 import PacmanLoader from "react-spinners/PacmanLoader";
@@ -17,16 +17,9 @@ const override = css`
   width: 300px;
 `;
 
-const BookList = ({ books, loading, error, fetchBooks }: Books) => {
-  React.useEffect(() => {
-    fetchBooks();
-  }, []);
-
-  if (error) {
-    return <ErrorIndicator />
-  }
+const BookList = ({ books, loading }: IBookList) => {
   return (
-    <>
+    <React.Fragment>
       <SpinnerWrapper className="sweet-loading">
         <PacmanLoader
           css={override}
@@ -46,28 +39,36 @@ const BookList = ({ books, loading, error, fetchBooks }: Books) => {
           })
         }
       </BookListUl>
-    </>
+    </React.Fragment>
+  );
+}
 
+const BookListContainer = ({ books, loading, error, fetchBooks }: Books) => {
+  React.useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  if (error) {
+    return <ErrorIndicator />
+  }
+  return (
+    <>
+      <BookList books={books} loading={loading} />
+    </>
   )
 }
+
 const mapStateToProps = ({ books, loading, error }: Books) => {
   return { books, loading, error };
 }
 
-const mapDispatchToProps = (dispatch: React.Dispatch<any>, ownProps: Books) => {
-  const { bookstoreService } = ownProps;
+const mapDispatchToProps = (dispatch: React.Dispatch<any>, { bookstoreService }: IOwnProps) => {
   return {
-    fetchBooks: () => {
-      dispatch(booksRequested());
-      bookstoreService.getBooks()
-        .then((data: Books[]) => dispatch(booksLoaded(data)))
-        .catch((err: string) => dispatch(booksError(err)))
-
-    }
+    fetchBooks: fetchBooks(bookstoreService, dispatch)
   }
 }
 
 export default compose(
   withBookstoreservice(),
   connect(mapStateToProps, mapDispatchToProps),
-)(BookList);
+)(BookListContainer);
