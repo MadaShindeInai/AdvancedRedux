@@ -51,7 +51,13 @@ const allBooksRemoveFromCart = (bookId: number): IAllBookRemoved => {
   }
 }
 
-const fetchBooks = (bookstoreService: Books, dispatch: React.Dispatch<any>) => () => {
+// const fetchBooksOld = (bookstoreService: Books, dispatch: React.Dispatch<any>) => () => {
+//   dispatch(booksRequested());
+//   bookstoreService.getBooks()
+//     .then((data: Books[]) => dispatch(booksLoaded(data)))
+//     .catch((err: string) => dispatch(booksError(err)))
+// }
+const fetchBooks = (bookstoreService: Books) => () => (dispatch: React.Dispatch<any>) => {
   dispatch(booksRequested());
   bookstoreService.getBooks()
     .then((data: Books[]) => dispatch(booksLoaded(data)))

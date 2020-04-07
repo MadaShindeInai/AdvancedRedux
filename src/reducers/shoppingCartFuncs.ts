@@ -44,9 +44,10 @@ export const updateOrder = (state: any, bookId: number, quantity: number) => {
   const itemIndex = cartItems.findIndex(({ id }: any) => id === bookId);
   const item = cartItems[itemIndex];
   const newItem = updateCartItem(book, item, quantity);
-
+  let newOrderTotal = 0;
+  updateCartItems(cartItems, newItem, itemIndex).forEach(({ total }) => total ? newOrderTotal += total : 0)
   return {
-    orderTotal: 0,
+    orderTotal: newOrderTotal,
     cartItems: updateCartItems(cartItems, newItem, itemIndex)
   }
 }

@@ -26,7 +26,7 @@ const mapStateToProps = ({ bookList: { books, loading, error } }: Books) => {
 
 const mapDispatchToProps = (dispatch: React.Dispatch<any>, { bookstoreService }: any) => {
   return {
-    fetchBooks: fetchBooks(bookstoreService, dispatch)
+    fetchBooks: () => dispatch(fetchBooks(bookstoreService)())
   }
 }
 
