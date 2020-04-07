@@ -1,6 +1,6 @@
-export const BOOKS_LOADED: string = 'FETCH_BOOKS_SUCSESS';
-export const BOOKS_REQUESTED: string = 'FETCH_BOOKS_REQUEST';
-export const BOOKS_ERROR: string = 'FETCH_BOOKS_FAILURE';
+export const FETCH_BOOKS_SUCCESS: string = 'FETCH_BOOKS_SUCCESS';
+export const FETCH_BOOKS_REQUEST: string = 'FETCH_BOOKS_REQUEST';
+export const FETCH_BOOKS_FAILURE: string = 'FETCH_BOOKS_FAILURE';
 export const BOOK_ADDED_TO_CART: string = 'BOOK_ADDED_TO_CART';
 export const BOOK_REMOVED_FROM_CART: string = 'BOOK_REMOVED_FROM_CART';
 export const ALL_BOOKS_REMOVED_FROM_CART: string = 'ALL_BOOKS_REMOVED_FROM_CART';
@@ -13,25 +13,29 @@ export interface ICartItem {
   total?: number;
 }
 export interface InitialState {
-  books: Array<Book>;
-  loading: boolean;
-  error: any;
-  cartItems: Array<ICartItem>;
-  orderTotal: number;
+  bookList: {
+    books: Array<Book>;
+    loading: boolean;
+    error: any;
+  },
+  shoppingCart: {
+    cartItems: Array<ICartItem>;
+    orderTotal: number;
+  }
 }
 export interface Action {
   type: string;
   payload?: Array<Book> | any;
 }
 export interface IBooksLoaded {
-  type: typeof BOOKS_LOADED
+  type: typeof FETCH_BOOKS_SUCCESS
   payload: Array<Book>
 }
 export interface IBooksRequested {
-  type: typeof BOOKS_REQUESTED
+  type: typeof FETCH_BOOKS_REQUEST
 }
 export interface IBooksError {
-  type: typeof BOOKS_ERROR
+  type: typeof FETCH_BOOKS_FAILURE
   payload: null | string
 }
 export interface IBookAdded {
@@ -69,6 +73,7 @@ export interface Books extends Book {
   error: any;
   fetchBooks: any;
   onAddedToCart: any;
+  bookList: any;
 }
 // REDUCERS INTERFACES (not only but existing)
 export interface IHeaderProps {

@@ -20,7 +20,7 @@ const ErrorIndicator = ({ fetchBooks }: Books) => {
     </ErrorContainer>
   );
 }
-const mapStateToProps = ({ books, loading, error }: Books) => {
+const mapStateToProps = ({ bookList: { books, loading, error } }: Books) => {
   return { books, loading, error };
 }
 

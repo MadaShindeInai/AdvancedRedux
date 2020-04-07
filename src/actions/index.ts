@@ -7,9 +7,9 @@ import {
   IBookAdded,
   IBookRemoved,
   IAllBookRemoved,
-  BOOKS_LOADED,
-  BOOKS_REQUESTED,
-  BOOKS_ERROR,
+  FETCH_BOOKS_SUCCESS,
+  FETCH_BOOKS_REQUEST,
+  FETCH_BOOKS_FAILURE,
   BOOK_ADDED_TO_CART,
   ALL_BOOKS_REMOVED_FROM_CART,
   BOOK_REMOVED_FROM_CART
@@ -17,18 +17,18 @@ import {
 
 const booksLoaded = (newBooks: Array<Book>): IBooksLoaded => {
   return {
-    type: BOOKS_LOADED,
+    type: FETCH_BOOKS_SUCCESS,
     payload: newBooks,
   }
 }
 const booksRequested = (): IBooksRequested => {
   return {
-    type: BOOKS_REQUESTED,
+    type: FETCH_BOOKS_REQUEST,
   }
 }
 const booksError = (error: null | string): IBooksError => {
   return {
-    type: BOOKS_ERROR,
+    type: FETCH_BOOKS_FAILURE,
     payload: error,
   }
 }
