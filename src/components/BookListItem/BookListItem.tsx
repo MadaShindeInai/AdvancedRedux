@@ -1,22 +1,21 @@
 import * as React from 'react';
-import styled from 'styled-components'
+import { TestSpan, ItemContainer, AddToCartButton } from './styled';
 
-
-const TestSpan = styled.span`
-  color: blue;
-  font-weight: bold;
-`
-
-const BookListItem = ({ book }: any) => {
-  const { title, author } = book;
+const BookListItem = ({ book: { title, author, price, coverImage }, onAddedToCart }: any) => {
   return (
-    <React.Fragment>
+    <ItemContainer>
+      <img src={coverImage} alt="cover" width="140" height="200" />
       <TestSpan>{title}</TestSpan>
       <TestSpan>{author}</TestSpan>
-    </React.Fragment>
+      <TestSpan>{price} BYN</TestSpan>
+      <AddToCartButton
+        onClick={onAddedToCart}
+        className="btn btn-info add-to-cart"
+      >Add to cart</AddToCartButton>
+    </ItemContainer>
 
   );
 }
 
-
+//TYPESCRYPT1111
 export default BookListItem;

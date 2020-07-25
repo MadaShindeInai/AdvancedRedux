@@ -1,29 +1,18 @@
-const initialState: InitialState = {
-  books: [],
-}
+import {
+  InitialState,
+  Action,
+} from '../interfaces';
 
-interface InitialState {
-  books: Array<Book>;
-}
-interface Action {
-  type: string;
-  payload: Array<Book>;
-}
-interface Book {
-  id: number;
-  author: string;
-  title: string;
-}
+import updateBookList from './bookList';
+import updateShoppingCart from './shoppingCart';
 
-const reducer = (state = initialState, action: Action) => {
-  switch (action.type) {
-    case 'BOOKS_LOADED':
-      return {
-        books: action.payload
-      };
-    default:
-      return state;
-  }
+
+
+const reducer = (state: InitialState | undefined, action: Action): InitialState => {
+  return {
+    bookList: updateBookList(state, action),
+    shoppingCart: updateShoppingCart(state, action),
+  };
 }
 
 export default reducer;

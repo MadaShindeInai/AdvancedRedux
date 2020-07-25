@@ -1,58 +1,80 @@
 import * as React from 'react';
-import styled from 'styled-components'
-import BookListItem from '../BookListItem'
+import BookListItem from '../BookListItem';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import compose from '../../utils'
+import { fetchBooks, bookAddedToCart } from '../../actions';
+import compose from '../../utils';
 import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
-import * as actions from '../../actions'
-const TestLi = styled.li`
-  color: purple;
-  font-weight: bold;
-`
-interface Books {
-  books: Array<Book>;
-  bookstoreService: {
-    getBooks: () => Book;
-  };
-  booksLoaded: any;
-}
+import { SpinnerWrapper, BookListUl } from './styled';
+import { Books, Book, IBookList, IOwnProps } from '../../interfaces';
 
-interface Book {
-  id: number;
-  author: string;
-  title: string;
-}
+import { css } from "@emotion/core";
+import PacmanLoader from "react-spinners/PacmanLoader";
+import ErrorIndicator from '../ErrorIndicator';
 
-const BookList = ({ books, booksLoaded, bookstoreService }: Books) => {
-  React.useEffect(() => {
-    const data = bookstoreService.getBooks();
-    booksLoaded(data);
-  }, [])
+const override = css`
+  display: block;
+  margin: 0 0 100px ;
+  width: 300px;
+`;
+
+const BookList = ({ books, loading, onAddedToCart }: IBookList) => {
   return (
-    <ul>
-      {
-        books.map((book: Book) => {
-          return (
-            <TestLi key={book.id}><BookListItem book={book} /></TestLi>
-          )
-        })
-      }
-    </ul>
+    <React.Fragment>
+      <SpinnerWrapper className="sweet-loading">
+        <PacmanLoader
+          css={override}
+          size={70}
+          color={"#123abc"}
+          loading={loading}
+        />
+      </SpinnerWrapper>
+      <BookListUl>
+        {
+          books.map((book: Book) => {
+            return (
+              <li key={book.id}>
+                <BookListItem
+                  book={book}
+                  onAddedToCart={() => onAddedToCart(book.id)}
+                />
+              </li>
+            )
+          })
+        }
+      </BookListUl>
+    </React.Fragment>
+  );
+}
 
+const BookListContainer = ({ books, loading, error, onAddedToCart, fetchBooks }: Books) => {
+  React.useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  if (error) {
+    return <ErrorIndicator />
+  }
+  return (
+    <>
+      <BookList onAddedToCart={onAddedToCart} books={books} loading={loading} />
+    </>
   )
 }
-const mapStateToProps = ({ books }: Books) => {
-  return { books };
+
+const mapStateToProps = ({ bookList: { books, loading, error } }: Books) => {
+  return { books, loading, error };
 }
 
-// const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any, { bookstoreService }: IOwnProps) => {
 
-//   return bindActionCreators({
-//     booksLoaded
-//   }, dispatch);
-// }
+  return bindActionCreators({
+    fetchBooks: fetchBooks(bookstoreService),
+    onAddedToCart: bookAddedToCart,
+  }, dispatch);
+}
 
 export default compose(
   withBookstoreservice(),
-  connect(mapStateToProps, actions),
-)(BookList);
+  connect(mapStateToProps, mapDispatchToProps),
+)(BookListContainer);

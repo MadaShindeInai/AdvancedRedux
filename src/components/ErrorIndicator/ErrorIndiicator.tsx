@@ -1,16 +1,36 @@
 import * as React from 'react';
-import styled from 'styled-components'
+import { fetchBooks } from '../../actions';
+import { connect } from 'react-redux';
+import compose from '../../utils';
+import withBookstoreservice from '../../components/Hoc/WithBookstoreService';
+import { ErrorSpan, ErrorContainer } from './styled'
+import { Books } from '../../interfaces';
 
-const ErrorSpan = styled.span`
-  color: red;
-`
-
-const ErrorIndicator = () => {
+const ErrorIndicator = ({ fetchBooks }: Books) => {
   return (
-    <React.Fragment>
-      <ErrorSpan>ERRROR</ErrorSpan>
-    </React.Fragment>
+    <ErrorContainer>
+      <ErrorSpan>ERROR 503:</ErrorSpan>
+      <ErrorSpan>Service Unavailable</ErrorSpan>
+      <button
+        className="btn btn-primary mt-2"
+        onClick={() => {
+          fetchBooks();
+        }}
+      >Try Again</button>
+    </ErrorContainer>
   );
 }
+const mapStateToProps = ({ bookList: { books, loading, error } }: Books) => {
+  return { books, loading, error };
+}
 
-export default ErrorIndicator;
+const mapDispatchToProps = (dispatch: React.Dispatch<any>, { bookstoreService }: any) => {
+  return {
+    fetchBooks: () => dispatch(fetchBooks(bookstoreService)())
+  }
+}
+
+export default compose(
+  withBookstoreservice(),
+  connect(mapStateToProps, mapDispatchToProps),
+)(ErrorIndicator);

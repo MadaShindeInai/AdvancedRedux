@@ -1,12 +1,7 @@
 import * as React from 'react';
-import styled from 'styled-components'
+import { TestSpan } from './cart-page-styled'
 
-const TestSpan = styled.span`
-  color: blue;
-  font-weight: bold;
-`
-
-const CartPage = () => {
+const CartPage: React.FC = () => {
   return (
     <TestSpan>Cart Page</TestSpan>
 

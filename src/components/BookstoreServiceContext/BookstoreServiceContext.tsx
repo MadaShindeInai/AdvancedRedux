@@ -1,8 +1,6 @@
 import React from 'react'
+import { AppContextInterface } from '../../interfaces'
 
-interface AppContextInterface {
-  getBooks: any;
-}
 
 const {
   Provider: BookstoreServiceProvider,

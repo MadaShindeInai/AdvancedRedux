@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-// import styled from 'styled-components'
 import ErrorIndicator from '../ErrorIndicator';
-
 
 class ErrorBoundry extends Component {
 

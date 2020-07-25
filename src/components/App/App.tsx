@@ -1,26 +1,25 @@
 import * as React from 'react';
-// import styled from 'styled-components'
 import { Route, Switch } from 'react-router-dom'
 import { HomePage, CartPage } from '../pages'
+import Header from '../Header';
+import { Container } from './styled';
 
-// const TestSpan = styled.span`
-//   color: blue;
-//   font-weight: bold;
-// `
-
-const App = () => {
+const App: React.FC = () => {
   return (
-    <Switch>
-      <Route
-        path="/"
-        component={HomePage}
-        exact
-      />
-      <Route
-        path="/cart"
-        component={CartPage}
-      />
-    </Switch>
+    <Container>
+      <Header numItems={5} total={210} />
+      <Switch>
+        <Route
+          path="/"
+          component={HomePage}
+          exact
+        />
+        <Route
+          path="/cart"
+          component={CartPage}
+        />
+      </Switch>
+    </Container>
 
   );
 }
